@@ -1,25 +1,22 @@
-import { readInput } from "../utils/index";
+import { lcov } from "node:test/reporters";
+import { getColumnsFromInput, readInput } from "../utils/index";
 
 export const day01 = () => {
   const input = readInput("day01.txt");
-  const lines = input.split("\n");
-  const left: number[] = [];
-  const right: number[] = [];
+  const [left, right]: string[][] = getColumnsFromInput(input, "   ");
 
-  for (const line of lines) {
-    const [lCol, rCol] = line.split("   ");
-    left.push(parseInt(lCol));
-    right.push(parseInt(rCol));
-  }
-
-  left.sort((a, b) => a - b);
-  right.sort((a, b) => a - b);
+  const leftSorted = convertAndSort(left);
+  const rightSorted = convertAndSort(right);
 
   return {
-    distances: calculateDistance(left, right),
-    similarities: calculateSimilarities(left, right),
+    distances: calculateDistance(leftSorted, rightSorted),
+    similarities: calculateSimilarities(leftSorted, rightSorted),
   };
 };
+
+function convertAndSort(arr: string[]): number[] {
+  return arr.map((v) => parseInt(v)).sort((a, b) => a - b);
+}
 
 function calculateDistance(lColumn: number[], rColumn: number[]) {
   const result: number[] = [];
