@@ -1,4 +1,3 @@
-import { lcov } from "node:test/reporters";
 import { getColumnsFromInput, readInput } from "../utils/index";
 
 export const day01 = () => {
