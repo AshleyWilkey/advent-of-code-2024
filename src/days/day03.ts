@@ -5,9 +5,17 @@ export const day03 = () => {
 
   const regex = /mul\((\d+),(\d+)\)/g;
 
-  const results = input.match(regex);
+  const results = input.match(regex)?.map((el) => el.toString());
+  const results2 = getValidMulInputs(input, regex);
 
-  return results
+  return {
+    part01: calculateMulInputs(results),
+    part02: calculateMulInputs(results2),
+  };
+};
+
+export const calculateMulInputs = (mulInputs?: string[]) => {
+  return mulInputs
     ?.map((result) =>
       result
         .match(/(\d+),(\d+)/g)
@@ -20,4 +28,11 @@ export const day03 = () => {
         }, 0)
     )
     .reduce((acc, curr) => acc! + curr!);
+};
+
+const getValidMulInputs = (input: string, regex: RegExp) => {
+  return input
+    .split("do()")
+    .map((exp) => exp.split("don't()")[0])
+    .flatMap((exp) => exp.match(regex) || []);
 };
