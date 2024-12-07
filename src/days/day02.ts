@@ -43,18 +43,14 @@ const isSafe = (line: number[]): boolean => {
     }
 
     if (typeof isIncreasing !== "boolean") {
-      if (currNum < nextNum) {
-        isIncreasing = true;
-      } else {
-        isIncreasing = false;
-      }
+      isIncreasing = currNum < nextNum;
     }
 
-    if ((isIncreasing && currNum > nextNum) || nextNum - currNum > 3) {
-      safe = false;
-    }
-
-    if ((!isIncreasing && currNum < nextNum) || currNum - nextNum > 3) {
+    if (
+      (isIncreasing && currNum > nextNum) ||
+      (!isIncreasing && currNum < nextNum) ||
+      Math.abs(nextNum - currNum) > 3
+    ) {
       safe = false;
     }
   }
