@@ -16,18 +16,16 @@ export const day03 = () => {
 
 export const calculateMulInputs = (mulInputs?: string[]) => {
   return mulInputs
-    ?.map((result) =>
-      result
-        .match(/(\d+),(\d+)/g)
-        ?.map((el) => el.split(","))
-        .flat()
-        .map((n) => parseInt(n))
-        .reduce((acc, curr) => {
-          if (!acc) return curr;
-          else return acc * curr;
-        }, 0)
+    ?.flatMap(
+      (result) =>
+        result.match(/(\d+),(\d+)/g)?.map((el) =>
+          el
+            .split(",")
+            .map(parseInt)
+            .reduce((acc, curr) => acc * curr, 1)
+        ) ?? []
     )
-    .reduce((acc, curr) => acc! + curr!);
+    .reduce((acc, curr) => acc + curr, 0);
 };
 
 const getValidMulInputs = (input: string, regex: RegExp) => {
